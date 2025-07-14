@@ -83,11 +83,11 @@ function wp_trip_booking_handle_booking() {
             update_post_meta($booking_id, $key, $value);
         }
         // Redirect to dashboard or show success message
-        wp_redirect(site_url('/user-dashboard/?booking=success'));
+        wp_redirect(site_url('/dashboard/?booking=success'));
         exit;
     } else {
         // Already booked, show message or redirect
-        wp_redirect(site_url('/user-dashboard/?booking=exists'));
+        wp_redirect(site_url('/dashboard/?booking=exists'));
         exit;
     }
 }
