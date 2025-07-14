@@ -114,7 +114,29 @@
   </div>
 
   <div class="mt-4">
-    <a style="background-color: #cc6b37; padding: 12px 20px; color: white; display: inline-block; margin-top: 10px; text-decoration: none; border-radius: 5px; font-weight: bold;" href="#" class="btn btn-primary">Book Now</a>
+    <?php 
+    // Collect all relevant query parameters
+    $params = array(
+      'adults' => isset($_GET['adults']) ? (int)$_GET['adults'] : 1,
+      'kids' => isset($_GET['kids']) ? (int)$_GET['kids'] : 0,
+      'start_date' => isset($_GET['start_date']) ? sanitize_text_field($_GET['start_date']) : '',
+      'departure' => isset($_GET['departure']) ? sanitize_text_field($_GET['departure']) : '',
+      'vehicle_type' => isset($_GET['vehicle_type']) ? sanitize_text_field($_GET['vehicle_type']) : '',
+      'trip_type' => isset($_GET['trip_type']) ? sanitize_text_field($_GET['trip_type']) : '',
+      'book_now' => 1
+    );
+    $book_url = add_query_arg($params, get_permalink());
+    $login_url = site_url('/login/');
+    ?>
+    <?php if (is_user_logged_in()): ?>
+        <a style="background-color: #cc6b37; padding: 12px 20px; color: white; display: inline-block; margin-top: 10px; text-decoration: none; border-radius: 5px; font-weight: bold;" 
+           href="<?php echo esc_url($book_url); ?>" 
+           class="btn btn-primary">Book Now</a>
+    <?php else: ?>
+        <a style="background-color: #cc6b37; padding: 12px 20px; color: white; display: inline-block; margin-top: 10px; text-decoration: none; border-radius: 5px; font-weight: bold;" 
+           href="<?php echo esc_url($login_url); ?>?redirect_to=<?php echo urlencode(get_permalink()); ?>" 
+           class="btn btn-primary">Book Now</a>
+    <?php endif; ?>
   </div>
 
   <!-- Tour Gallery -->
